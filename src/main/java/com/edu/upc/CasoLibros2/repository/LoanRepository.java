@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface LoanInterface extends JpaRepository<Loan, Long> {
+public interface LoanRepository extends JpaRepository<Loan, Long> {
     boolean existsByCodeStudent(String codeStudent);
     List<Loan> findByCodeStudent(String codeStudent);
 }
