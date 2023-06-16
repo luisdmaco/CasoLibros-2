@@ -1,8 +1,9 @@
 package com.edu.upc.CasoLibros2.controller;
 
 import com.edu.upc.CasoLibros2.exception.ResourceNotFoundException;
-import com.edu.upc.CasoLibros2.model.Book;
-import com.edu.upc.CasoLibros2.model.Loan;
+import com.edu.upc.CasoLibros2.exception.ValidationException;
+import com.edu.upc.CasoLibros2.entity.Book;
+import com.edu.upc.CasoLibros2.entity.Loan;
 import com.edu.upc.CasoLibros2.repository.BookRepository;
 import com.edu.upc.CasoLibros2.repository.LoanRepository;
 import org.springframework.http.HttpStatus;
@@ -48,16 +49,16 @@ public class LoanController {
 
     private void existsByCodeStudentAndBookAndBookLoan(Loan loan, Book book) {
         if(loanRepository.existsByCodeStudentAndBookAndBookLoan(loan.getCodeStudent(), book, true)) {
-            throw new RuntimeException("El estudiante ya tiene prestado el libro");
+            throw new ValidationException("El estudiante ya tiene prestado el libro");
         }
     }
 
     private void validateLoan(Loan loan) {
         if(loan.getCodeStudent() == null || loan.getCodeStudent().isEmpty()) {
-            throw new RuntimeException("El código de estudiante es obligatorio");
+            throw new ValidationException("El código de estudiante es obligatorio");
         }
         if(loan.getCodeStudent().length() > 10) {
-            throw new RuntimeException("El código de estudiante no puede tener 10 caracteres");
+            throw new ValidationException("El código de estudiante no puede tener 10 caracteres");
         }
     }
 }

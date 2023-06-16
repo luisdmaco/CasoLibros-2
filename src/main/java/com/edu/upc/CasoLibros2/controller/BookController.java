@@ -1,15 +1,14 @@
 package com.edu.upc.CasoLibros2.controller;
 
-import com.edu.upc.CasoLibros2.model.Book;
+import com.edu.upc.CasoLibros2.dto.BookDto;
+import com.edu.upc.CasoLibros2.exception.ValidationException;
+import com.edu.upc.CasoLibros2.entity.Book;
 import com.edu.upc.CasoLibros2.repository.BookRepository;
 import com.edu.upc.CasoLibros2.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,19 +22,31 @@ public class BookController {
         this.bookRepository = bookRepository;
     }
 
-    //EndPoint: http://localhost:8080/api/library/v1/books
+/*    //EndPoint: http://localhost:8080/api/library/v1/books
     //Method: GET
     @Transactional(readOnly = true)
     @RequestMapping("/books")
     public ResponseEntity<List<Book>> getAllBooks(){
         return new ResponseEntity<List<Book>>(bookRepository.findAll(), HttpStatus.OK);
+    }*/
+
+    @GetMapping("/books")
+    public List<BookDto> getAllBooks(){
+        return bookService.getAllBooks();
     }
 
-    //EndPoint: http://localhost:8080/api/library/v1/books
+/*    //EndPoint: http://localhost:8080/api/library/v1/books
     //Method: POST
     @Transactional
     @PostMapping("/books")
-    public ResponseEntity<Book> createBook(Book book) {
+    public ResponseEntity<Book> createBook(@RequestBody Book book) {
+        existsByTitleAndEditorial(book);
+        validateBook(book);
+        return new ResponseEntity<>(bookService.createBook(book), HttpStatus.CREATED);
+    } */
+
+    @PostMapping("/books")
+    public ResponseEntity<Book> createBook(@RequestBody Book book) {
         existsByTitleAndEditorial(book);
         validateBook(book);
         return new ResponseEntity<>(bookService.createBook(book), HttpStatus.CREATED);
@@ -43,22 +54,22 @@ public class BookController {
 
     public void validateBook(Book book) {
         if(book.getTitle() == null || book.getTitle().trim().isEmpty()) {
-            throw new RuntimeException("El titulo del libro debe ser obligatorio.");
+            throw new ValidationException("El titulo del libro debe ser obligatorio.");
         }
         if(book.getTitle().length() > 22) {
-            throw new RuntimeException("El titulo del libro no debe exceder los 22 caracteres.");
+            throw new ValidationException("El titulo del libro no debe exceder los 22 caracteres.");
         }
         if(book.getEditorial() == null || book.getEditorial().trim().isEmpty()) {
-            throw new RuntimeException("La editorial del libro debe ser obligatorio.");
+            throw new ValidationException("La editorial del libro debe ser obligatorio.");
         }
         if(book.getEditorial().length() > 14) {
-            throw new RuntimeException("La editorial del libro no debe exceder los 14 caracteres.");
+            throw new ValidationException("La editorial del libro no debe exceder los 14 caracteres.");
         }
     }
 
     private void existsByTitleAndEditorial(Book book) {
         if(bookRepository.existsByTitleAndEditorial(book.getTitle(), book.getEditorial())) {
-            throw new RuntimeException("El libro ya existe.");
+            throw new ValidationException("El libro ya existe.");
         }
     }
 }

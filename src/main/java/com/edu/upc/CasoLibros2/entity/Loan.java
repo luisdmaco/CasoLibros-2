@@ -1,4 +1,4 @@
-package com.edu.upc.CasoLibros2.model;
+package com.edu.upc.CasoLibros2.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -23,7 +23,7 @@ public class Loan {
     @Column(name = "code_student", nullable = false, length = 10)
     private String codeStudent;
 
-    @Column(name = "code_book", nullable = false)
+    @Column(name = "loan_date", nullable = false)
     private LocalDate loanDate;
 
     @Column(name = "devolution_date", nullable = false)

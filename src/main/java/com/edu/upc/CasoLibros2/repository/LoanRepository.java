@@ -1,7 +1,7 @@
 package com.edu.upc.CasoLibros2.repository;
 
-import com.edu.upc.CasoLibros2.model.Book;
-import com.edu.upc.CasoLibros2.model.Loan;
+import com.edu.upc.CasoLibros2.entity.Book;
+import com.edu.upc.CasoLibros2.entity.Loan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

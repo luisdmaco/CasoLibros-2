@@ -1,4 +1,4 @@
-package com.edu.upc.CasoLibros2.model;
+package com.edu.upc.CasoLibros2.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "title", nullable = false, length = 22)
     private String title;
