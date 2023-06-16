@@ -1,4 +1,4 @@
-package com.edu.upc.CasoLibros2.entity;
+package com.edu.upc.CasoLibros2.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;

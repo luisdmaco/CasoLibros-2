@@ -1,4 +1,4 @@
-package com.edu.upc.CasoLibros2.entity;
+package com.edu.upc.CasoLibros2.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
